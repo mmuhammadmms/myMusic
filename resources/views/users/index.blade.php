@@ -27,7 +27,7 @@
     <tbody>
       @foreach ($users as $user)
       <tr>
-        <th scope="row">{{ $user->id }}</th>
+        <th scope="row"><img src="{{ asset('storage/' . $user->pic) }}" class="rounded" style="width:100px;height:80px"alt=""></th>
         <td>{{ $user->username }}</td>
         <td>{{ $user->name }}</td>
         <td>{{ $user->email }}</td>

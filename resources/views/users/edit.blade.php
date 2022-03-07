@@ -9,7 +9,7 @@
                 <div class="card-header"><h1>{{ __('Edit User') }}</h1></div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('users.update' , $user->id) }}">
+                    <form method="POST" action="{{ route('users.update' , $user->id) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="row mb-3">
@@ -56,6 +56,21 @@
                             </div>
                         </div>
 
+                        <div class="row mb-3">
+                            <label for="pic" class="col-md-4 col-form-label text-md-end">{{ __('Profile Picture') }}</label>
+                            
+                            <div class="col-md-6">
+                                <img src="{{ asset('storage/' . $user->pic) }}" class="rounded mx-auto d-block mb-2" style="width:100px"alt="">
+                        
+                                <input id="pic" type="file" class="form-control" name="pic" required>
+                                @error('pic')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
@@ -64,13 +79,16 @@
                             </div>
                         </div>
                     </form>
-                    <form method="post" action="{{ route('users.destroy' , $user->id) }}" style="display:inline"> 
+                    <div class="row mb-0">
+                        <form method="post" action="{{ route('users.destroy' , $user->id) }}" style="display:inline"> 
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-danger"> Delete {{ $user->username }}
     
                             </button>
                         </form>
+                    </div>
+                    
                    
                 </div>
             </div>

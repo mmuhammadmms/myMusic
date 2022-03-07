@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('thumbnail')->nullable();
             $table->string('price');
             $table->string('quantity');
-            $table->foreignId('brand_id')->constrained;
-            $table->foreignId('category_id')->constrained;
+            $table->foreignId('brand_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

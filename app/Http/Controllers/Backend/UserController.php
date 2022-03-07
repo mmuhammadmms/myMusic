@@ -40,11 +40,14 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request)
     {
+        $path = $request->file('pic')->store('thumbnails');
+
         User::create([
             'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'pic' => $path,
         ]);
 
         return redirect()->route('users.index')->with('message' , 'User Created Succesfully');
@@ -79,13 +82,24 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserUpdateRequest $request, User $user)
+    public function update( User $user)
     {
+        request()->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:20','unique:users,username,' . $user->id],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
+        ]);
+
+        $path = $user->pic;
+        if (isset(request()->pic)){
+            $path = request()->file('pic')->store('thumbnails');
+        }
+
         $user->update([
-            'name' => $request->name,
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'name' => request()->name,
+            'username' => request()->username,
+            'email' => request()->email,
+            'pic' => $path
         ]);
         return redirect()->route('users.index')->with('message' , 'Users Updated Successfully.');
     }

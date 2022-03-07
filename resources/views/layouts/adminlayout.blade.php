@@ -102,28 +102,15 @@
               <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                 <li class="dropdown-header">
                   <h6>{{ Auth::user()->name }}</h6>
-                  <span>Admin</span>
+                  @can('admin')
+                    (Admin)
+                  @endcan
                 </li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
     
-                <li>
-                  <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                    <i class="bi bi-person"></i>
-                    <span>My Profile</span>
-                  </a>
-                </li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-    
-                <li>
-                  <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                    <i class="bi bi-gear"></i>
-                    <span>Account Settings</span>
-                  </a>
-                </li>
+               
                 <li>
                   <hr class="dropdown-divider">
                 </li>
@@ -205,15 +192,6 @@
     
       <main id="main" class="main">
     
-        <div class="pagetitle">
-          <h1>Dashboard</h1>
-          <nav>
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="/home">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard</li>
-            </ol>
-          </nav>
-        </div><!-- End Page Title -->
         
         
           @yield('content')
